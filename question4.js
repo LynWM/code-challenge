@@ -20,18 +20,15 @@
 
 // CODE
 
-const prices = [22, 35, 65, 50, 84]
+const prices = [22, 35, 50, 60, 84]
 
-function priceSorted() {
-    for (let i = 0; i < prices.length; i++) {
-        if (i > i+1) {
-            return false;
-        } else {
+function priceSorted(prices) {
+    return prices.every((current, index) => {
+        if(index === prices.length - 1) 
             return true;
-        }
-        
-    }
-    
+
+        return current <= prices[index + 1];
+    });
 }
 
 console.log(priceSorted(prices));

@@ -25,27 +25,34 @@ next_smaller(2071) == 2017 */
 console.log("Question 1");
 
  function nextSmaller(num) {
-    const digits = String(num).split('').map(Number);
+    let digits = String(num).split('').map(Number);
+    let i = digits.length - 2;
 
-    for (let i  = num.length - 1; i > 0 ; i--) {
-        if (digits [i - 1] > digits [i]) {
-            break;
-        } 
+    //finding pivot
+    while (i >= 0 && digits [i] <= digits[i + 1]) {
+        i--;
     }
 
-    const pointIndex = i - 1;
-    const pointValue = digits[pointIndex];
+    if (i < 0) return -1; //in the case of no possible smaller number
 
-    let swapPlace;
-    for (let j = num.length -1 ; j > pointIndex; j--) {
-        if (digits[j] < pointValue) {
-            swapPlace = j;
-            break
-        }
-        
+    //finding largest digit to the right smaller than pivot
+    let j = digits.length - 1;
+    while (digits[j] >= digits[i]) {
+        j--;
     }
+
+    //swapping pivot and digit[j]
+    [digits[i], digits[j]] = [digits[j], digits[i]];
+
+    //sorting in descending order
+    let left = digits.slice(0, i  + 1);
+    let right = digits.slice(i + 1).sort((a,b) => b - a);
+
+    let result = Number(left.concat(right).join(''));
+
+    // check for leading zero
+    return result < num ?result : -1;
  }
 
- nextSmaller(892);
 
- console.log(nextSmaller(872));
+ console.log(nextSmaller(23410));
